@@ -1,5 +1,6 @@
 import { Response } from '@angular/http';
 import { TrajetService } from './services/trajet.service';
+import { AuthService } from './services/auth.service';
 import Trajet from './models/trajet.model';
 import { Component, OnInit } from '@angular/core';
 
@@ -12,7 +13,9 @@ export class AppComponent implements OnInit {
 
   constructor(
     //Private trajetService will be injected into the component by Angular Dependency Injector
+    private authService: AuthService,
     private trajetService: TrajetService,
+    
     //private panier: Trajet[]
   ) { }
 
@@ -21,7 +24,7 @@ export class AppComponent implements OnInit {
 
   //An Empty list for lesTrajets
   lesTrajets: Trajet[];
-
+ 
 
   ngOnInit(): void {
 
@@ -41,6 +44,10 @@ export class AppComponent implements OnInit {
         this.lesTrajets.push(res.data)
         this.newTrajet = new Trajet()
       })
+  }
+
+  connect() {
+    this.authService.login()
   }
 
 }

@@ -1,67 +1,107 @@
-<!doctype html>
-  <html lang="en">
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <link rel="icon" href="../../../../favicon.ico">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
   
-      <title>Cover Template for Bootstrap</title>
-  
-      <!-- Bootstrap core CSS -->
-      <link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet">
-  
-      <!-- Custom styles for this template -->
-     
-    </head>
-  
-    <body>
-  
-      <div class="site-wrapper">
-  
-        <div class="site-wrapper-inner">
-  
-          <div class="cover-container">
-  
-            <header class="masthead clearfix">
-              <div class="inner">
-                <h3 class="masthead-brand">Cover</h3>
-                <nav class="nav nav-masthead">
-                  <a class="nav-link active" href="#">Home</a>
-                  <a class="nav-link" href="#">Features</a>
-                  <a class="nav-link" href="#">Contact</a>
-                </nav>
-              </div>
-            </header>
-  
-            <main role="main" class="inner cover">
-              <h1 class="cover-heading">Cover your page.</h1>
-              <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
-              <p class="lead">
-                <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
-              </p>
-            </main>
-  
-            <footer class="mastfoot">
-              <div class="inner">
-                <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-              </div>
-            </footer>
-  
-          </div>
-  
+  <!-- Image and text -->
+<nav class="navbar navbar-light bg-faded">
+  <a class="navbar-brand" href="#">
+    <img src="/assets/icon.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    NeoCovoit
+  </a>
+</nav>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto p-2">
+      <li class="nav-item active">
+        <a class="nav-link" href="app-root">Accueil <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Mes Trajets</a>
+      </li>
+      <li class="nav-item">
+        <button class="btn btn-success" (click)="connect()">
+          <i  class="fa fa-check"></i>
+        </button>
+      </li>
+    </ul>
+    <nav class="form-inline my-2 my-lg-0">
+      <form class="form-inline">
+        <div class="input-group mr-lg-0">
+          <span class="input-group-addon" id="departSearch">De</span>
+          <input type="text" class="form-control" placeholder="Départ">
+          <span class="input-group-addon" id="destinationSearch">À</span>
+          <input type="text" class="form-control" placeholder="Destination">
+          <span class="input-group-addon" id="dateSearch">Le</span>
+          <input type="text" class="form-control" placeholder="Date" >
         </div>
-  
-      </div>
-  
-      <!-- Bootstrap core JavaScript
-      ================================================== -->
-      <!-- Placed at the end of the document so the pages load faster -->
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-      <script src="../../../../assets/js/vendor/popper.min.js"></script>
-      <script src="../../../../dist/js/bootstrap.min.js"></script>
-    </body>
-  </html>
-  
+        <button class="btn btn-outline-success my-sm-1" type="submit">Recherche</button>
+      </form>
+    </nav>
+  </div>
+</nav>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+
+    <div class="trajets" *ngIf="lesTrajets">
+      <table class="table">
+        <thead class="h">
+          <tr class="h">
+            <th class="h">Depart</th>
+            <th class="h">Destination</th>
+            <th class="h">Date</th>
+            <th class="h">Prix</th>
+            <th class="h">Places</th>
+            <th class="h">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr class="trajet" *ngFor="let trajet of lesTrajets">
+
+            <td>{{trajet.depart}}</td>
+            <td>{{trajet.destination}}</td>
+            <td>{{trajet.date | date}}</td>
+            <td>{{trajet.prix}}</td>
+            <td>{{trajet.nbrPlaces}}</td>
+            
+            <td>
+              <button class="btn btn-success" (click)="reserverTrajet(trajet)">
+                <i  class="fa fa-check"></i>
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <form>
+      <tr class="form-row">
+
+        <td >
+          <input type="text" name="depart" id="depart" [(ngModel)]="newTrajet.depart" placeholder="Départ" class="form-control">
+        </td>
+        <td >
+          <input type="text" name="destination" id="destination" [(ngModel)]="newTrajet.destination" placeholder="Déstination" class="form-control">
+        </td>
+        <td >
+          <input type="Date" name="date" id="date" [(ngModel)]="newTrajet.date" placeholder="Date" class="form-control">
+        </td>
+        <td >
+          <input type="text" name="prix" id="prix" [(ngModel)]="newTrajet.prix" placeholder="Prix" class="form-control">
+        </td>
+        <td>
+          <input type="text" name="nbrPlaces" id="nbrPlaces" [(ngModel)]="newTrajet.nbrPlaces" placeholder="Places" class="form-control">
+        </td>
+        <td>
+          <button type="submit" class="btn btn-primary" (click)="create()">Proposer</button>
+        </td>
+      </tr>
+    </form>
+  </div>
+  <div class="col-md-2">
+    
+  </div>
